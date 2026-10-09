@@ -13,7 +13,6 @@ fuente = pygame.font.SysFont("arial", 24)
 
 cielo = (130,200,229)
 dino = pygame.image.load("sprites/Dinosaurio.png")
-agachado = pygame.image.load ("sprites/agachado.png")
 obstaculos = [
     pygame.image.load("sprites/cactus.png"),
     pygame.image.load("sprites/cactus.png"),
@@ -25,9 +24,9 @@ suelo = pygame.image.load("sprites/suelo.png")
 color = (53,56,57)
 puntos = 0
 
-dino_rect = pygame.Rect(100, 300, 100, 100)
-dino = pygame.transform.scale(dino, (100, 100))
-suelo_y = 300
+dino_rect = pygame.Rect(100, 650, 100, 100)
+dino = pygame.transform.scale(dino, (150, 150))
+suelo_y = 750
 velocidad_y = 0
 gravedad = 0.8
 fuerza_salto = -15
@@ -51,11 +50,22 @@ while jugando:
         dino_rect.x -= 5
     if teclas [pygame.K_RIGHT]:
         dino_rect.x += 5
-    if teclas [pygame.K_DOWN]:
-        pantalla.blit ("sprites/agachado.png")
+    if (teclas [pygame.K_SPACE] or teclas [pygame.K_UP]) and en_el_suelo:
+        velocidad_y = fuerza_salto
+        en_el_suelo = False
 
+    dino_rect.y += velocidad_y
+    velocidad_y += gravedad
+
+    if dino_rect.bottom >= suelo_y:
+        velocidad_y = 0
+        en_el_suelo = True
+        dino_rect.bottom = suelo_y
     
     pygame.draw.rect (pantalla, cielo, dino_rect)
+    pantalla.blit( dino, (dino_rect))
+    pantalla.blit(suelo, (0, 800))
+    pantalla.blit(suelo, (700, 800))
     
     pygame.display.flip()
 
