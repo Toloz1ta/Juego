@@ -13,10 +13,10 @@ fuente = pygame.font.SysFont("arial", 24)
 
 cielo = (130,200,229)
 dino = pygame.image.load("sprites/Dinosaurio.png")
-obstaculos = [
-    pygame.image.load("sprites/cactus.png"),
-    pygame.image.load("sprites/cactus.png"),
-    pygame.image.load("sprites/roca.png")]
+
+cactus = pygame.image.load("sprites/cactus.png")
+pajaro = pygame.image.load("sprites/pajaro.png")
+roca = pygame.image.load("sprites/roca.png")
 
 velocidad_obstaculos = 6
 
@@ -31,6 +31,10 @@ velocidad_y = 0
 gravedad = 0.8
 fuerza_salto = -15
 en_el_suelo = True
+
+#Obstaculos 
+roca_x = random.randint (0,1920)
+roca_y = 0
 
 
 
@@ -61,10 +65,15 @@ while jugando:
         velocidad_y = 0
         en_el_suelo = True
         dino_rect.bottom = suelo_y
+        
+    
+    
+    roca_y += velocidad_obstaculos
     
     pygame.draw.rect (pantalla, cielo, dino_rect)
     pantalla.blit( dino, (dino_rect))
     pantalla.blit(suelo, (0, 800))
+    pantalla.blit (roca, (roca_x, roca_y))
     pantalla.blit(suelo, (700, 800))
     
     pygame.display.flip()
